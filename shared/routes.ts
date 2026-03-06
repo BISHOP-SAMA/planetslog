@@ -28,10 +28,10 @@ export const api = {
     },
     status: {
       method: 'GET' as const,
-      path: '/api/applications/status/:address' as const,
+      path: '/api/status' as const,
       responses: {
         200: z.object({
-          status: z.string() // e.g., 'pending', 'certified'
+          status: z.string()
         }),
         404: errorSchemas.notFound,
       }
@@ -45,6 +45,8 @@ export function buildUrl(path: string, params?: Record<string, string | number>)
     Object.entries(params).forEach(([key, value]) => {
       if (url.includes(`:${key}`)) {
         url = url.replace(`:${key}`, String(value));
+      } else {
+        url += `${url.includes('?') ? '&' : '?'}${key}=${value}`;
       }
     });
   }

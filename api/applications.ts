@@ -6,9 +6,6 @@ import { Resend } from "resend";
 import { z } from "zod";
 
 const { Pool } = pg;
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const db = drizzle(pool);
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const applications = pgTable("applications", {
   id: serial("id").primaryKey(),
@@ -29,28 +26,32 @@ const insertSchema = z.object({
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).end();
 
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  const db = drizzle(pool);
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
   try {
     const data = insertSchema.parse(req.body);
     const [application] = await db.insert(applications).values(data).returning();
 
-    if (process.env.RESEND_API_KEY) {
-      await resend.emails.send({
-        from: "Junkyard <onboarding@resend.dev>",
-        to: "backyardjunkieseth@gmail.com",
-        subject: "New Junkie Application",
-        html: `
-          <h2>New Application Received</h2>
-          <p><strong>X Username:</strong> ${data.xUsername}</p>
-          <p><strong>EVM Address:</strong> ${data.evmAddress}</p>
-          <p><strong>Quote Tweet:</strong> ${data.quoteTweet}</p>
-          <p><strong>Favourite Junk:</strong> ${data.favoriteJunk}</p>
-        `,
-      });
-    }
+    await resend.emails.send({
+      from: "Junkyard <onboarding@resend.dev>",
+      to: "backyardjunkieseth@gmail.com",
+      subject: "New Junkie Application",
+      html: `
+        <h2>New Application Received</h2>
+        <p><strong>X Username:</strong> ${data.xUsername}</p>
+        <p><strong>EVM Address:</strong> ${data.evmAddress}</p>
+        <p><strong>Quote Tweet:</strong> ${data.quoteTweet}</p>
+        <p><strong>Favourite Junk:</strong> ${data.favoriteJunk}</p>
+      `,
+    });
 
     return res.status(201).json(application);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    await pool.end();
   }
 }

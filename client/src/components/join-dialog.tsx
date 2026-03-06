@@ -2,7 +2,6 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { useLocation } from "wouter";
-// Using the explicitly requested background image
 import popupBg from "@assets/junck.jpg";
 
 interface JoinDialogProps {
@@ -42,13 +41,19 @@ export function JoinDialog({ isOpen, onClose }: JoinDialogProps) {
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${popupBg})` }}
             />
-            {/* Earthy Dark Wash to ensure text is readable */}
-            <div className="absolute inset-0 bg-foreground/40 mix-blend-multiply" />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent" />
+            {/* Dark overlay for readability */}
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
             {/* Content Layer */}
             <div className="relative z-10 flex flex-col items-center justify-center p-8 sm:p-12 text-center h-full min-h-[400px]">
-              <h2 className="mb-8 font-display text-4xl sm:text-5xl font-extrabold text-stroke leading-tight tracking-wider">
+              <h2
+                className="mb-8 font-display text-4xl sm:text-5xl font-extrabold leading-tight tracking-wider text-white"
+                style={{
+                  textShadow:
+                    "2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 0px 4px 12px rgba(0,0,0,0.8)",
+                }}
+              >
                 Welcome to the Junkyard
               </h2>
               

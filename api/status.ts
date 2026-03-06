@@ -18,29 +18,22 @@ const applications = pgTable("applications", {
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method === "GET") {
-    const address = req.query.address as string;
+  if (req.method !== "GET") return res.status(405).end();
 
-    if (!address) {
-      return res.status(400).json({ message: "Address is required" });
-    }
+  const address = req.query.address as string;
+  if (!address) return res.status(400).json({ message: "Address is required" });
 
-    try {
-      const [application] = await db
-        .select()
-        .from(applications)
-        .where(eq(applications.evmAddress, address));
+  try {
+    const [application] = await db
+      .select()
+      .from(applications)
+      .where(eq(applications.evmAddress, address));
 
-      if (!application) {
-        return res.status(404).json({ message: "Application not found" });
-      }
+    if (!application) return res.status(404).json({ message: "Application not found" });
 
-      return res.status(200).json({ status: "certified", application });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Internal server error" });
-    }
+    return res.status(200).json({ status: "certified", application });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
   }
-
-  return res.status(405).end();
 }

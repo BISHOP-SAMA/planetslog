@@ -26,6 +26,14 @@ const insertSchema = z.object({
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).end();
 
+  if (!process.env.DATABASE_URL) {
+    return res.status(500).json({ error: "DATABASE_URL is not set" });
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    return res.status(500).json({ error: "RESEND_API_KEY is not set" });
+  }
+
   const pool = new Pool({ connectionString: process.env.DATABASE_URL });
   const db = drizzle(pool);
   const resend = new Resend(process.env.RESEND_API_KEY);

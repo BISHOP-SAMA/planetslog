@@ -17,7 +17,7 @@ interface FrensDialogProps {
 const COMMUNITIES = [
   { name: "D00ds",     image: doodsImg,     greeting: "You're a D00d!" },
   { name: "Normies",   image: normiesImg,   greeting: "You're a Normie!" },
-  { name: "Bloba",     image: blobaImg,     greeting: "Bloba rules!" },
+  { name: "Bloba",     image: blobaImg,     greeting: "Bloba's rule!" },
   { name: "Supawcool", image: supawcoolImg, greeting: "You're Supawcool!" },
 ];
 

@@ -22,7 +22,7 @@ const COMMUNITIES = [
 ];
 
 // Google Sheet published as CSV
-const SHEET_CSV_URL = "YOUR_GOOGLE_SHEET_CSV_URL_HERE";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvgXm6DGmZWmj-DIgT4VcdkOGMWrJ2C6E4ckf2S551sJpfXQ1VFJUA40lcKtYL5_UnrSpIFQZNSncs/pub?output=csv";
 
 async function checkWalletInSheet(address: string): Promise<{ name: string; image: string; greeting: string } | null> {
   try {

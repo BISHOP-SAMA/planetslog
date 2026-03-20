@@ -14,32 +14,46 @@ interface FrensDialogProps {
   onClose: () => void;
 }
 
-// ── MANUAL WHITELISTS ──────────────────────────────────────────────
-// Paste wallet addresses (lowercase) for each community below
-const WHITELIST: Record<string, { name: string; image: string; greeting: string }> = {
-  // D00ds holders — add addresses like: "0xabc...": { name: "D00ds", image: doodsImg, greeting: "You're a Junky D00d!" }
-};
-
 const COMMUNITIES = [
-  { name: "D00ds",      image: doodsImg,     greeting: "You're a Junky D00d!" },
-  { name: "Normies",    image: normiesImg,   greeting: "You're a Junky Normie!" },
-  { name: "Bloba",      image: blobaImg,     greeting: "You're a Junky Bloba!" },
-  { name: "Supawcool",  image: supawcoolImg, greeting: "You're a Supaw Junkie!" },
+  { name: "D00ds",     image: doodsImg,     greeting: "You're a Junky D00d!" },
+  { name: "Normies",   image: normiesImg,   greeting: "You're a Junky Normie!" },
+  { name: "Bloba",     image: blobaImg,     greeting: "You're a Junky Bloba!" },
+  { name: "Supawcool", image: supawcoolImg, greeting: "You're a Supaw Junkie!" },
 ];
 
-// Helper: check wallet against whitelist
-function checkWallet(address: string) {
-  return WHITELIST[address.toLowerCase()] ?? null;
+// Google Sheet published as CSV
+const SHEET_CSV_URL = "YOUR_GOOGLE_SHEET_CSV_URL_HERE";
+
+async function checkWalletInSheet(address: string): Promise<{ name: string; image: string; greeting: string } | null> {
+  try {
+    const response = await fetch(SHEET_CSV_URL);
+    const text = await response.text();
+    const rows = text.trim().split("\n").map(row => row.split(","));
+    const lower = address.toLowerCase();
+
+    for (const row of rows) {
+      const wallet = row[0]?.trim().toLowerCase();
+      const community = row[1]?.trim();
+      if (wallet === lower) {
+        const found = COMMUNITIES.find(c => c.name.toLowerCase() === community.toLowerCase());
+        return found ?? null;
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }
 
 export function FrensDialog({ isOpen, onClose }: FrensDialogProps) {
   const [wallet, setWallet] = useState("");
-  const [result, setResult] = useState<"idle" | "found" | "notfound">("idle");
+  const [result, setResult] = useState<"idle" | "loading" | "found" | "notfound">("idle");
   const [match, setMatch] = useState<{ name: string; image: string; greeting: string } | null>(null);
 
-  const handleCheck = () => {
+  const handleCheck = async () => {
     if (!wallet.trim()) return;
-    const found = checkWallet(wallet.trim());
+    setResult("loading");
+    const found = await checkWalletInSheet(wallet.trim());
     if (found) {
       setMatch(found);
       setResult("found");
@@ -111,13 +125,25 @@ export function FrensDialog({ isOpen, onClose }: FrensDialogProps) {
                 }}
                 className="font-mono"
               />
-              <Button onClick={handleCheck} size="icon" className="flex-shrink-0">
+              <Button onClick={handleCheck} size="icon" className="flex-shrink-0" disabled={result === "loading"}>
                 <Search className="h-5 w-5" />
               </Button>
             </div>
 
             {/* Result */}
             <AnimatePresence mode="wait">
+              {result === "loading" && (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="p-4 text-muted-foreground font-bold"
+                >
+                  Checking...
+                </motion.div>
+              )}
+
               {result === "found" && match && (
                 <motion.div
                   key="found"
@@ -160,3 +186,4 @@ export function FrensDialog({ isOpen, onClose }: FrensDialogProps) {
       )}
     </AnimatePresence>
   );
+}

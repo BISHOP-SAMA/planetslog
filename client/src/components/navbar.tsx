@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import logoSrc from "@assets/Logo-junkies.jpg";
 import oasisSrc from "@assets/Oasis.png";
 
-// ── SPLIFF SOCIAL COUNTDOWN ──────────────────────────────────────
-// Set your fixed end date here
 const SPLIFF_TARGET = new Date("2026-04-06T00:00:00Z");
 
 function useCountdown(target: Date) {
@@ -26,7 +24,6 @@ function useCountdown(target: Date) {
   return time;
 }
 
-// ── SPLIFF SOCIAL DIALOG ─────────────────────────────────────────
 function SpliffSocialDialog({ onClose }: { onClose: () => void }) {
   const { days, hours, minutes, seconds } = useCountdown(SPLIFF_TARGET);
 
@@ -60,7 +57,6 @@ function SpliffSocialDialog({ onClose }: { onClose: () => void }) {
           An upcoming social network for holders and select communities.
         </p>
 
-        {/* Countdown */}
         <div className="flex justify-center gap-3">
           {[
             { label: "Days",    value: days },
@@ -83,51 +79,13 @@ function SpliffSocialDialog({ onClose }: { onClose: () => void }) {
   );
 }
 
-// ── LEADERBOARD DIALOG ───────────────────────────────────────────
-function LeaderboardDialog({ onClose }: { onClose: () => void }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
-        className="absolute inset-0 bg-foreground/60 backdrop-blur-sm"
-      />
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0, y: 10 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.95, opacity: 0, y: 10 }}
-        className="relative w-full max-w-md rounded-3xl bg-card p-8 cartoon-border cartoon-shadow-lg text-center"
-      >
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 hover:bg-muted transition-colors text-foreground font-bold text-lg"
-        >
-          ✕
-        </button>
-
-        <div className="mb-4 text-4xl">🏆</div>
-        <h2 className="font-display text-3xl font-extrabold text-foreground mb-2">
-          Spliff Leaderboard
-        </h2>
-        <p className="text-muted-foreground font-medium">
-          Coming Soon
-        </p>
-      </motion.div>
-    </div>
-  );
-}
-
-// ── MAIN NAVBAR ──────────────────────────────────────────────────
 export function Navbar() {
   const [spliffOpen, setSpliffOpen] = useState(false);
-  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
 
   return (
     <>
       {/* Top announcement bar */}
-      <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-center gap-2 sm:gap-4 bg-foreground/90 backdrop-blur-sm px-4 py-2">
+      <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-center bg-foreground/90 backdrop-blur-sm px-4 py-2">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -136,20 +94,9 @@ export function Navbar() {
         >
           🌿 Spliff Social
         </motion.button>
-
-        <div className="w-px h-5 bg-white/20" />
-
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setLeaderboardOpen(true)}
-          className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white font-bold text-sm cartoon-border"
-        >
-          🏆 Spliff Leaderboard
-        </motion.button>
       </div>
 
-      {/* Main navbar — pushed down below the announcement bar */}
+      {/* Main navbar */}
       <nav className="fixed top-10 left-0 right-0 z-40 flex items-center justify-between px-6 py-4">
         <Link href="/">
           <motion.div
@@ -177,12 +124,8 @@ export function Navbar() {
         </Link>
       </nav>
 
-      {/* Dialogs */}
       <AnimatePresence>
         {spliffOpen && <SpliffSocialDialog onClose={() => setSpliffOpen(false)} />}
-      </AnimatePresence>
-      <AnimatePresence>
-        {leaderboardOpen && <LeaderboardDialog onClose={() => setLeaderboardOpen(false)} />}
       </AnimatePresence>
     </>
   );

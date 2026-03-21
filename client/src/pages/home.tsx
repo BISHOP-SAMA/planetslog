@@ -5,6 +5,7 @@ import { JoinDialog } from "@/components/join-dialog";
 import { StatusDialog } from "@/components/status-dialog";
 import { FrensDialog } from "@/components/frens-dialog";
 import { Navbar } from "@/components/navbar";
+import bgSrc from "@assets/Background.png";
 
 export default function Home() {
   const [isJoinOpen, setIsJoinOpen] = useState(false);
@@ -12,18 +13,20 @@ export default function Home() {
   const [isFrensOpen, setIsFrensOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden relative">
+    <div
+      className="min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden relative"
+      style={{ backgroundImage: `url(${bgSrc})`, backgroundSize: "cover", backgroundPosition: "center" }}
+    >
       <Navbar />
 
-      {/* Decorative background elements */}
-      <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full blur-3xl opacity-20" />
-      <div className="absolute bottom-10 right-10 w-48 h-48 bg-secondary rounded-full blur-3xl opacity-20" />
+      {/* subtle overlay so content stays readable */}
+      <div className="absolute inset-0 bg-white/30" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
-        className="relative z-10 w-full max-w-3xl mx-auto text-center mt-20"
+        className="relative z-10 w-full max-w-3xl mx-auto text-center mt-28"
       >
         <motion.div
           animate={{ rotate: [-2, 2, -2] }}

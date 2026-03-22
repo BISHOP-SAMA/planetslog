@@ -9,14 +9,12 @@ import { ArrowLeft, CheckCircle2, CheckSquare, Loader2, Sparkles } from "lucide-
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useCreateApplication } from "@/hooks/use-applications";
 
 const applySchema = z.object({
   quoteTweet: z.string().url("Please provide a valid URL to your quote tweet"),
-  favoriteJunk: z.string().min(2, "Tell us your favorite junk!"),
-  xUsername: z.string().min(2, "X Username is required").regex(/^@?(\w){1,15}$/, "Invalid X Username"),
+  xUsername: z.string().min(2, "Comment link is required"),
   evmAddress: z.string().regex(/^0x[a-fA-F0-9]{40}$/, "Please enter a valid EVM address"),
 });
 
@@ -55,7 +53,6 @@ export default function Apply() {
     resolver: zodResolver(applySchema),
     defaultValues: {
       quoteTweet: "",
-      favoriteJunk: "",
       xUsername: "",
       evmAddress: "",
     },
@@ -63,7 +60,7 @@ export default function Apply() {
 
   const onSubmit = async (data: ApplyFormValues) => {
     try {
-      await submitApplication(data);
+      await submitApplication({ ...data, favoriteJunk: "-" });
       triggerConfetti();
       setIsSuccess(true);
     } catch (error) {
@@ -75,13 +72,11 @@ export default function Apply() {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
     const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
     const interval: any = setInterval(function() {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) return clearInterval(interval);
-
       const particleCount = 50 * (timeLeft / duration);
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
@@ -166,22 +161,10 @@ export default function Apply() {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="favoriteJunk" className="text-lg">What is your favourite Junk?</Label>
-                    <Textarea
-                      id="favoriteJunk"
-                      placeholder="Old cereal boxes, broken toys, you name it..."
-                      {...form.register("favoriteJunk")}
-                    />
-                    {form.formState.errors.favoriteJunk && (
-                      <p className="text-destructive font-bold text-sm">{form.formState.errors.favoriteJunk.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-3">
-                    <Label htmlFor="xUsername" className="text-lg">Enter X username here</Label>
+                    <Label htmlFor="xUsername" className="text-lg">Drop a comment and tag a fren</Label>
                     <Input
                       id="xUsername"
-                      placeholder="@yourusername"
+                      placeholder="Drop comment link"
                       {...form.register("xUsername")}
                     />
                     {form.formState.errors.xUsername && (

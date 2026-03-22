@@ -27,7 +27,7 @@ const checklistItems = [
   },
   {
     label: "Like and Retweet Junkies",
-    url: "https://x.com/i/status/2031083248898461727",
+    url: "https://x.com/i/status/2035804464884654214",
   },
   {
     label: "Quote Junkies",

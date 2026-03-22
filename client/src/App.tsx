@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "./pages/home";
 import Apply from "./pages/apply";
 import Oasis from "./pages/oasis";
+import SpliffSocial from "./pages/spliff-social";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/apply" component={Apply} />
       <Route path="/oasis" component={Oasis} />
+      <Route path="/spliff-social" component={SpliffSocial} />
       <Route component={NotFound} />
     </Switch>
   );

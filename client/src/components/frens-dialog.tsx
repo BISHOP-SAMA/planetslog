@@ -105,7 +105,7 @@ export function FrensDialog({ isOpen, onClose }: FrensDialogProps) {
             </p>
 
             {/* Partner community images */}
-            <div className="flex justify-center gap-3 mb-6">
+            <div className="grid grid-cols-3 gap-3 mb-6">
               {COMMUNITIES.map((c) => (
                 <div key={c.name} className="flex flex-col items-center gap-1">
                   <img

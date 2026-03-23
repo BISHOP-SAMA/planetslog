@@ -21,8 +21,8 @@ const COMMUNITIES = [
   { name: "Normies",    image: normiesImg,   greeting: "You're a Normie!" },
   { name: "Bloba",      image: blobaImg,     greeting: "Bloba's rule!" },
   { name: "Supawcool",  image: supawcoolImg, greeting: "You're Supawcool!" },
-  { name: "PrismJolt",  image: prismImg,     greeting: "You're a PrismJolt!" },
-  { name: "DelMundos",  image: mundosImg,    greeting: "You're a Mundos!" },
+  { name: "PrismJolt",  image: prismImg,     greeting: "You're Jolted!" },
+  { name: "DelMundos",  image: mundosImg,    greeting: "Junkies❤️Mundos!" },
 ];
 
 // Google Sheet published as CSV

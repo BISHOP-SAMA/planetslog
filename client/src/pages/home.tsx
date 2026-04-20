@@ -5,7 +5,7 @@ import { JoinDialog } from "@/components/join-dialog";
 import { StatusDialog } from "@/components/status-dialog";
 import { FrensDialog } from "@/components/frens-dialog";
 import { Navbar } from "@/components/navbar";
-import bgSrc from "@assets/Background.png";
+import bgSrc from "@assets/background.jpg";
 
 export default function Home() {
   const [isJoinOpen, setIsJoinOpen] = useState(false);
@@ -19,8 +19,7 @@ export default function Home() {
     >
       <Navbar />
 
-      {/* subtle overlay so content stays readable */}
-      <div className="absolute inset-0 bg-white/30" />
+      <div className="absolute inset-0 bg-black/40" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -32,14 +31,16 @@ export default function Home() {
           animate={{ rotate: [-2, 2, -2] }}
           transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
         >
-          <h1 className="font-display text-7xl sm:text-8xl md:text-9xl font-extrabold text-stroke tracking-widest mb-6">
-            JUNKIES
+          <h1 className="font-display text-7xl sm:text-8xl md:text-9xl font-extrabold tracking-widest mb-6 text-orange-400"
+            style={{ textShadow: "0 0 40px rgba(230,130,50,0.8)" }}
+          >
+            SLOGS
           </h1>
         </motion.div>
 
-        <div className="bg-white px-8 py-4 rounded-full inline-block cartoon-border cartoon-shadow mb-12 transform -rotate-2">
-          <p className="text-xl sm:text-2xl font-bold text-foreground">
-            Take a closer step to the junkyard
+        <div className="bg-black/60 border border-orange-500/40 px-8 py-4 rounded-full inline-block mb-12 transform -rotate-2">
+          <p className="text-xl sm:text-2xl font-bold text-orange-200">
+            Slow and steady wins the whitelist
           </p>
         </div>
 
@@ -48,10 +49,10 @@ export default function Home() {
             <Button
               size="lg"
               variant="default"
-              className="text-xl px-12 py-8 w-full sm:w-auto"
+              className="text-xl px-12 py-8 w-full sm:w-auto bg-orange-500 hover:bg-orange-600"
               onClick={() => setIsJoinOpen(true)}
             >
-              Join Junkies
+              Apply to WL
             </Button>
           </motion.div>
 
@@ -70,10 +71,10 @@ export default function Home() {
             <Button
               size="lg"
               variant="outline"
-              className="text-xl px-12 py-8 w-full sm:w-auto"
+              className="text-xl px-12 py-8 w-full sm:w-auto border-orange-500/50 text-orange-300 hover:bg-orange-500/10"
               onClick={() => setIsFrensOpen(true)}
             >
-              Junkies Frens
+              Slog Frens
             </Button>
           </motion.div>
         </div>

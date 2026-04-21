@@ -1,7 +1,17 @@
+import { motion } from "framer-motion";
+import { Link } from "wouter";
+import Navbar from "@/components/Navbar"; // Adjust path based on your project structure
+
+// Asset Imports
 import logoPng from "@assets/Logo.png";
 import applyJpg from "@assets/Apply.jpg";
 import dressJpg from "@assets/Dress.png";
 import raceJpg from "@assets/Race.jpg";
+
+// Placeholder for background and slog previews (Ensure these exist or update paths)
+const bgSrc = "/assets/background.jpg"; 
+const slog1Src = "/assets/slog1.png";
+const slog2Src = "/assets/slog2.png";
 
 const stats = [
   { label: "COLLECTION", value: "1,300", color: "#f97316" },
@@ -16,21 +26,30 @@ const cards = [
     label: "APPLY TO WL",
     sub: "Secure your spot",
     icon: applyJpg,
-    ...
+    borderColor: "rgba(249,115,22,0.3)",
+    glow: "rgba(249,115,22,0.1)",
+    topColor: "#f97316",
+    arrowBg: "#f97316"
   },
   {
     href: "/customize",
     label: "DRESS UP",
     sub: "Customize your snail",
     icon: dressJpg,
-    ...
+    borderColor: "rgba(167,139,250,0.3)",
+    glow: "rgba(167,139,250,0.1)",
+    topColor: "#a78bfa",
+    arrowBg: "#a78bfa"
   },
   {
     href: "/race",
     label: "RACE TO WIN",
     sub: "Earn WL in the track",
     icon: raceJpg,
-    ...
+    borderColor: "rgba(96,165,250,0.3)",
+    glow: "rgba(96,165,250,0.1)",
+    topColor: "#60a5fa",
+    arrowBg: "#60a5fa"
   },
 ];
 
@@ -52,7 +71,7 @@ export default function Home() {
 
       <div className="relative z-10 w-full max-w-4xl mx-auto text-center px-4 pt-28 pb-16 flex flex-col items-center">
 
-        {/* SLOGS title with float animation instead of color-change */}
+        {/* SLOGS title with float animation */}
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
@@ -88,7 +107,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex items-center gap-8 sm:gap-16 mb-12 px-8 py-4 rounded-2xl"
+          className="flex items-center gap-8 sm:gap-16 mb-12 px-8 py-4 rounded-2xl relative"
           style={{
             background: "rgba(15,8,4,0.75)",
             backdropFilter: "blur(12px)",
@@ -96,8 +115,7 @@ export default function Home() {
           }}
         >
           {stats.map((stat, i) => (
-            <div key={stat.label} className="text-center">
-              {i > 0 && <div className="hidden sm:block absolute h-8 w-px bg-white/10" />}
+            <div key={stat.label} className="text-center relative">
               <div
                 className="text-2xl sm:text-3xl font-black"
                 style={{ color: stat.color, fontFamily: font }}
@@ -127,7 +145,7 @@ export default function Home() {
             >
               <Link href={card.href}>
                 <div
-                  className="relative overflow-hidden rounded-2xl cursor-pointer"
+                  className="relative overflow-hidden rounded-2xl cursor-pointer text-left h-full"
                   style={{
                     background: "rgba(15,8,4,0.75)",
                     backdropFilter: "blur(10px)",
@@ -138,15 +156,11 @@ export default function Home() {
                   <div className="h-1.5 w-full" style={{ background: card.topColor }} />
                   <div className="p-5">
                     <div className="flex items-start justify-between mb-6">
-                      {typeof card.icon === "string" && card.icon.startsWith("/") || typeof card.icon !== "string" ? (
-                        <img
-                          src={card.icon as string}
-                          alt={card.label}
-                          className="w-10 h-10 rounded-lg object-cover"
-                        />
-                      ) : (
-                        <span className="text-3xl">{card.icon}</span>
-                      )}
+                      <img
+                        src={card.icon}
+                        alt={card.label}
+                        className="w-10 h-10 rounded-lg object-cover"
+                      />
                       <div
                         className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
                         style={{ background: card.arrowBg }}

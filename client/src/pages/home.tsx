@@ -1,15 +1,13 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Link } from "wouter";
-import { Navbar } from "@/components/navbar";
-import bgSrc from "@assets/background.jpg";
-import slog1Src from "@assets/Slog-1.jpg";
-import slog2Src from "@assets/Slog-2.jpg";
+import logoPng from "@assets/Logo.png";
+import applyJpg from "@assets/Apply.jpg";
+import dressJpg from "@assets/Dress.png";
+import raceJpg from "@assets/Race.jpg";
 
 const stats = [
-  { label: "SUPPLY", value: "3,333", color: "#f97316" },
+  { label: "COLLECTION", value: "1,300", color: "#f97316" },
   { label: "WL SPOTS", value: "500", color: "#a78bfa" },
-  { label: "MINT PRICE", value: "TBA", color: "#f97316" },
+  { label: "TEAM", value: "50", color: "#fbbf24" },
+  { label: "PARTNERED", value: "750", color: "#60a5fa" },
 ];
 
 const cards = [
@@ -17,31 +15,22 @@ const cards = [
     href: "/apply",
     label: "APPLY TO WL",
     sub: "Secure your spot",
-    icon: slog1Src,
-    borderColor: "rgba(249,115,22,0.6)",
-    topColor: "linear-gradient(90deg, #ea580c, #f59e0b)",
-    arrowBg: "#f97316",
-    glow: "rgba(249,115,22,0.3)",
+    icon: applyJpg,
+    ...
   },
   {
     href: "/customize",
     label: "DRESS UP",
     sub: "Customize your snail",
-    icon: "👕",
-    borderColor: "rgba(139,92,246,0.6)",
-    topColor: "linear-gradient(90deg, #7c3aed, #a855f7)",
-    arrowBg: "#8b5cf6",
-    glow: "rgba(139,92,246,0.3)",
+    icon: dressJpg,
+    ...
   },
   {
     href: "/race",
     label: "RACE TO WIN",
     sub: "Earn WL in the track",
-    icon: "🏁",
-    borderColor: "rgba(59,130,246,0.6)",
-    topColor: "linear-gradient(90deg, #1d4ed8, #06b6d4)",
-    arrowBg: "#3b82f6",
-    glow: "rgba(59,130,246,0.3)",
+    icon: raceJpg,
+    ...
   },
 ];
 

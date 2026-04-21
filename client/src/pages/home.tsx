@@ -1,21 +1,20 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import Navbar from "@/components/navbar"; // Adjust path based on your project structure
+import { Navbar } from "@/components/navbar";
 
-// Asset Imports
+// Asset Imports - Matches your uploaded filenames exactly
 import logoPng from "@assets/Logo.png";
 import applyJpg from "@assets/Apply.jpg";
-import dressJpg from "@assets/Dress.png";
+import dressPng from "@assets/Dress.png";
 import raceJpg from "@assets/Race.jpg";
-
-// Placeholder for background and slog previews (Ensure these exist or update paths)
-const bgSrc = "/assets/background.jpg"; 
-const slog1Src = "/assets/slog1.png";
-const slog2Src = "/assets/slog2.png";
+import bgSrc from "@assets/background.jpg";
+import slog1Src from "@assets/Slog-1.jpg";
+import slog2Src from "@assets/Slog-2.jpg";
 
 const stats = [
   { label: "COLLECTION", value: "1,300", color: "#f97316" },
-  { label: "WL SPOTS", value: "500", color: "#a78bfa" },
+  { label: "WEBSITE", value: "500", color: "#a78bfa" },
   { label: "TEAM", value: "50", color: "#fbbf24" },
   { label: "PARTNERED", value: "750", color: "#60a5fa" },
 ];
@@ -26,30 +25,30 @@ const cards = [
     label: "APPLY TO WL",
     sub: "Secure your spot",
     icon: applyJpg,
-    borderColor: "rgba(249,115,22,0.3)",
-    glow: "rgba(249,115,22,0.1)",
-    topColor: "#f97316",
-    arrowBg: "#f97316"
+    borderColor: "rgba(249,115,22,0.6)",
+    topColor: "linear-gradient(90deg, #ea580c, #f59e0b)",
+    arrowBg: "#f97316",
+    glow: "rgba(249,115,22,0.3)",
   },
   {
     href: "/customize",
     label: "DRESS UP",
     sub: "Customize your snail",
-    icon: dressJpg,
-    borderColor: "rgba(167,139,250,0.3)",
-    glow: "rgba(167,139,250,0.1)",
-    topColor: "#a78bfa",
-    arrowBg: "#a78bfa"
+    icon: dressPng,
+    borderColor: "rgba(139,92,246,0.6)",
+    topColor: "linear-gradient(90deg, #7c3aed, #a855f7)",
+    arrowBg: "#8b5cf6",
+    glow: "rgba(139,92,246,0.3)",
   },
   {
     href: "/race",
     label: "RACE TO WIN",
     sub: "Earn WL in the track",
     icon: raceJpg,
-    borderColor: "rgba(96,165,250,0.3)",
-    glow: "rgba(96,165,250,0.1)",
-    topColor: "#60a5fa",
-    arrowBg: "#60a5fa"
+    borderColor: "rgba(59,130,246,0.6)",
+    topColor: "linear-gradient(90deg, #1d4ed8, #06b6d4)",
+    arrowBg: "#3b82f6",
+    glow: "rgba(59,130,246,0.3)",
   },
 ];
 
@@ -70,8 +69,8 @@ export default function Home() {
       <Navbar />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto text-center px-4 pt-28 pb-16 flex flex-col items-center">
-
-        {/* SLOGS title with float animation */}
+        
+        {/* Logo display if needed, or stick with Animated Title */}
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
@@ -94,6 +93,7 @@ export default function Home() {
         >
           NFT Collection
         </p>
+        
         <div className="flex items-center justify-center gap-3 mb-10">
           <span className="w-12 h-px bg-orange-400/50" />
           <span className="text-xs tracking-widest text-yellow-400 font-bold" style={{ fontFamily: font }}>
@@ -102,20 +102,20 @@ export default function Home() {
           <span className="w-12 h-px bg-orange-400/50" />
         </div>
 
-        {/* Stats */}
+        {/* Updated Stats Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex items-center gap-8 sm:gap-16 mb-12 px-8 py-4 rounded-2xl relative"
+          className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 mb-12 px-8 py-4 rounded-2xl"
           style={{
             background: "rgba(15,8,4,0.75)",
             backdropFilter: "blur(12px)",
             border: "1px solid rgba(200,120,40,0.25)",
           }}
         >
-          {stats.map((stat, i) => (
-            <div key={stat.label} className="text-center relative">
+          {stats.map((stat) => (
+            <div key={stat.label} className="text-center">
               <div
                 className="text-2xl sm:text-3xl font-black"
                 style={{ color: stat.color, fontFamily: font }}
@@ -132,7 +132,7 @@ export default function Home() {
           ))}
         </motion.div>
 
-        {/* Feature Cards */}
+        {/* Feature Cards with specific icons */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mb-12">
           {cards.map((card, i) => (
             <motion.div
@@ -145,7 +145,7 @@ export default function Home() {
             >
               <Link href={card.href}>
                 <div
-                  className="relative overflow-hidden rounded-2xl cursor-pointer text-left h-full"
+                  className="relative overflow-hidden rounded-2xl cursor-pointer h-full text-left"
                   style={{
                     background: "rgba(15,8,4,0.75)",
                     backdropFilter: "blur(10px)",
@@ -159,7 +159,7 @@ export default function Home() {
                       <img
                         src={card.icon}
                         alt={card.label}
-                        className="w-10 h-10 rounded-lg object-cover"
+                        className="w-12 h-12 rounded-lg object-cover border border-white/10"
                       />
                       <div
                         className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"

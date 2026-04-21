@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import navbar from "@/components/navbar"; // Adjust path based on your project structure
+import Navbar from "@/components/navbar"; // Adjust path based on your project structure
 
 // Asset Imports
 import logoPng from "@assets/Logo.png";

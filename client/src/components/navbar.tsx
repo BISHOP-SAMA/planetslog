@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
+// Ensure this import name matches what you use below
 import logoPng from "@assets/Logo.png";
 
 const navItems = [
@@ -30,7 +31,8 @@ export function Navbar() {
           className="flex items-center gap-3 cursor-pointer"
         >
           <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-orange-500/60">
-            <img src={logoSrc} alt="Slogs" className="w-full h-full object-cover" />
+            {/* CHANGED logoSrc to logoPng to match the import above */}
+            <img src={logoPng} alt="Slogs" className="w-full h-full object-cover" />
           </div>
           <span
             className="text-xl font-black tracking-widest text-orange-400"

@@ -5,6 +5,10 @@ export const errorSchemas = {
   validation: z.object({
     message: z.string(),
     field: z.string().optional(),
+    errors: z.array(z.object({ // Added for more detailed error reporting
+      path: z.array(z.string()),
+      message: z.string()
+    })).optional(),
   }),
   internal: z.object({
     message: z.string(),
@@ -19,7 +23,7 @@ export const api = {
     create: {
       method: 'POST' as const,
       path: '/api/applications' as const,
-      input: insertApplicationSchema,
+      input: insertApplicationSchema, // This now uses the rebranded favoriteSlog schema
       responses: {
         201: z.custom<typeof applications.$inferSelect>(),
         400: errorSchemas.validation,
@@ -28,12 +32,13 @@ export const api = {
     },
     status: {
       method: 'GET' as const,
-      path: '/api/status' as const,
+      path: '/api/status/:address' as const, // Added :address parameter for clarity
       responses: {
         200: z.object({
           status: z.string()
         }),
         404: errorSchemas.notFound,
+        500: errorSchemas.internal,
       }
     }
   }

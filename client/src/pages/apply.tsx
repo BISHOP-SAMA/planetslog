@@ -66,14 +66,18 @@ export default function Apply() {
   };
 
   const onSubmit = async (data: ApplyFormValues) => {
-    try {
-      await submitApplication({ ...data, favoriteJunk: "-" });
-      triggerConfetti();
-      setIsSuccess(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  try {
+    await submitApplication({ 
+      ...data, 
+      favoriteSlog: "Slog Season 1" 
+    });
+    triggerConfetti();
+    setIsSuccess(true);
+  } catch (error) {
+    // Show the error message if the backend validation fails
+    alert(error instanceof Error ? error.message : "Submission failed");
+  }
+};
 
   return (
     <div

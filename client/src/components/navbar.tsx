@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import logoSrc from "@assets/Slog-1.jpg";
+import logoPng from "@assets/Logo.png";
 
 const navItems = [
   { href: "/", label: "HOME" },

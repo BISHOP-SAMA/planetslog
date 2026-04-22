@@ -132,7 +132,7 @@ export default function Race() {
           <div className="flex items-center justify-center gap-2 mb-3">
             <Trophy className="h-4 w-4 text-blue-500/60" />
             <span className="text-sm font-semibold text-white/70 tracking-tight">
-              Finish first and grab your GTD spot
+              Finish first and grab your reward
             </span>
           </div>
           <p className="text-xs text-white/30 leading-relaxed max-w-sm mx-auto">
@@ -147,7 +147,7 @@ export default function Race() {
           transition={{ delay: 0.9 }}
           className="mt-10 text-[11px] tracking-[0.15em] text-white/25 uppercase font-medium"
         >
-          Slow and steady wins the spot
+          Slow and steady
         </motion.p>
       </div>
     </div>

@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import logoPng from "@assets/Logo.png";
 
 const navItems = [
-  { href: "/", label: "HOME" },
   { href: "/apply", label: "APPLY WL" },
   { href: "/customize", label: "DRESS UP" },
   { href: "/race", label: "RACE" },

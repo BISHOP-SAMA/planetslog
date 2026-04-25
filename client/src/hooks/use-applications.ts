@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { api, buildUrl, type CreateApplicationInput } from "@shared/routes";
 
 export function useCreateApplication() {
@@ -11,8 +11,9 @@ export function useCreateApplication() {
       });
       
       if (!res.ok) {
-        const error = await res.json().catch(() => ({ message: "Failed to submit" }));
-        throw new Error(error.message || "Failed to submit application");
+        const body = await res.json().catch(() => ({}) as any);
+        // API returns { error: "..." }, fallback to status text
+        throw new Error(body.error || body.message || `Server error: ${res.status}`);
       }
       
       return res.json();
@@ -33,7 +34,8 @@ export function useApplicationStatus() {
       }
       
       if (!res.ok) {
-        throw new Error("Failed to fetch application status");
+        const body = await res.json().catch(() => ({}) as any);
+        throw new Error(body.error || body.message || "Failed to fetch application status");
       }
       
       return res.json();

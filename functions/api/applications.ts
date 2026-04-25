@@ -19,6 +19,14 @@ const schema = z.object({
 
 export async function onRequestPost(context: any) {
   const { env, request } = context;
+  
+  if (!env.DATABASE_URL) {
+    return new Response(JSON.stringify({ message: 'DATABASE_URL not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   try {
     const body = await request.json();
     const data = schema.parse(body);
@@ -31,8 +39,15 @@ export async function onRequestPost(context: any) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify({ message: 'Validation failed' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ message: 'Validation failed', errors: error.errors }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
-    return new Response(JSON.stringify({ message: 'Internal server error' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(JSON.stringify({ message: msg }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }

@@ -56,7 +56,7 @@ export default function Apply() {
       })();
       setIsSuccess(true);
     } catch (error: any) {
-      alert(error.response?.data?.message || "Check fields and try again.");
+  alert(error.message || "Check fields and try again.");
     }
   };
 
